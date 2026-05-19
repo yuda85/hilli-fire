@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isMember(orgId) {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid));
+    }
+
+    function memberRole(orgId) {
+      return get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.role;
+    }
+
+    function canEdit(orgId) {
+      return isMember(orgId) && memberRole(orgId) in ['owner', 'editor'];
+    }
+
+    // A user's own profile (used to look up their orgId).
+    match /userProfiles/{uid} {
+      allow read: if isSignedIn() && request.auth.uid == uid;
+      allow create, update: if isSignedIn() && request.auth.uid == uid;
+      allow delete: if false;
+    }
+
+    // Organization document.
+    match /organizations/{orgId} {
+      allow read: if isMember(orgId);
+      // Anyone signed-in can create an org doc whose ownerUid == their uid;
+      // initial bootstrap on registration.
+      allow create: if isSignedIn() && request.auth.uid == orgId
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if isMember(orgId) && memberRole(orgId) == 'owner';
+      allow delete: if false;
+
+      // Members subcollection.
+      match /members/{uid} {
+        allow read: if isMember(orgId);
+        // Self-write only at bootstrap (first member == owner).
+        allow create: if isSignedIn() && request.auth.uid == uid;
+        allow update, delete: if isMember(orgId) && memberRole(orgId) == 'owner';
+      }
+
+      // Projects.
+      match /projects/{projectId} {
+        allow read: if isMember(orgId);
+        allow create: if canEdit(orgId);
+        allow update: if canEdit(orgId);
+        allow delete: if canEdit(orgId);
+      }
+    }
+  }
+}

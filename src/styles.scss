@@ -1,0 +1,391 @@
+@use '@angular/material' as mat;
+
+// ============================================================================
+// Hilli Fire — Engineering-precise design system
+// ============================================================================
+
+html {
+  color-scheme: dark;
+
+  @include mat.theme((
+    color: (
+      primary: mat.$blue-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: dark,
+    ),
+    typography: (
+      plain-family: 'Inter, system-ui, -apple-system, "Segoe UI", sans-serif',
+      brand-family: 'Inter, system-ui, -apple-system, "Segoe UI", sans-serif',
+    ),
+    density: 0,
+  ));
+}
+
+// ----------------------------------------------------------------------------
+// Design tokens — dark (default)
+// ----------------------------------------------------------------------------
+html,
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --hf-bg: #0F172A;
+  --hf-surface: #1E293B;
+  --hf-surface-2: #273449;
+  --hf-surface-3: #334155;
+  --hf-border: #334155;
+  --hf-border-strong: #475569;
+  --hf-text: #F8FAFC;
+  --hf-text-muted: #94A3B8;
+  --hf-text-faint: #64748B;
+
+  --hf-primary: #3B82F6;
+  --hf-primary-hover: #60A5FA;
+  --hf-primary-soft: rgba(59, 130, 246, 0.14);
+
+  --hf-danger: #EF4444;
+  --hf-danger-soft: rgba(239, 68, 68, 0.14);
+  --hf-amber: #F59E0B;
+  --hf-amber-soft: rgba(245, 158, 11, 0.14);
+  --hf-success: #22C55E;
+  --hf-success-soft: rgba(34, 197, 94, 0.14);
+  --hf-info: #06B6D4;
+  --hf-info-soft: rgba(6, 182, 212, 0.14);
+
+  // Remap Material 3 system tokens onto our tokens
+  --mat-sys-background: var(--hf-bg);
+  --mat-sys-surface: var(--hf-surface);
+  --mat-sys-surface-container-lowest: var(--hf-bg);
+  --mat-sys-surface-container-low: var(--hf-surface);
+  --mat-sys-surface-container: var(--hf-surface);
+  --mat-sys-surface-container-high: var(--hf-surface-2);
+  --mat-sys-surface-container-highest: var(--hf-surface-3);
+  --mat-sys-outline: var(--hf-border);
+  --mat-sys-outline-variant: var(--hf-border);
+  --mat-sys-on-surface: var(--hf-text);
+  --mat-sys-on-surface-variant: var(--hf-text-muted);
+}
+
+// ----------------------------------------------------------------------------
+// Design tokens — light
+// ----------------------------------------------------------------------------
+html[data-theme='light'] {
+  color-scheme: light;
+
+  --hf-bg: #F8FAFC;
+  --hf-surface: #FFFFFF;
+  --hf-surface-2: #F1F5F9;
+  --hf-surface-3: #E2E8F0;
+  --hf-border: #E2E8F0;
+  --hf-border-strong: #CBD5E1;
+  --hf-text: #0F172A;
+  --hf-text-muted: #475569;
+  --hf-text-faint: #94A3B8;
+
+  --hf-primary: #2563EB;
+  --hf-primary-hover: #1D4ED8;
+  --hf-primary-soft: rgba(37, 99, 235, 0.10);
+
+  --hf-danger: #DC2626;
+  --hf-danger-soft: rgba(220, 38, 38, 0.10);
+  --hf-amber: #D97706;
+  --hf-amber-soft: rgba(217, 119, 6, 0.12);
+  --hf-success: #16A34A;
+  --hf-success-soft: rgba(22, 163, 74, 0.10);
+  --hf-info: #0891B2;
+  --hf-info-soft: rgba(8, 145, 178, 0.10);
+
+  --mat-sys-background: var(--hf-bg);
+  --mat-sys-surface: var(--hf-surface);
+  --mat-sys-surface-container-lowest: #FFFFFF;
+  --mat-sys-surface-container-low: var(--hf-bg);
+  --mat-sys-surface-container: var(--hf-surface-2);
+  --mat-sys-surface-container-high: var(--hf-surface-3);
+  --mat-sys-surface-container-highest: #CBD5E1;
+  --mat-sys-outline: var(--hf-border);
+  --mat-sys-outline-variant: var(--hf-border-strong);
+  --mat-sys-on-surface: var(--hf-text);
+  --mat-sys-on-surface-variant: var(--hf-text-muted);
+}
+
+// ----------------------------------------------------------------------------
+// Spacing / radius / motion
+// ----------------------------------------------------------------------------
+:root {
+  --hf-space-0: 0;
+  --hf-space-1: 4px;
+  --hf-space-2: 8px;
+  --hf-space-3: 12px;
+  --hf-space-4: 16px;
+  --hf-space-5: 24px;
+  --hf-space-6: 32px;
+  --hf-space-7: 48px;
+  --hf-space-8: 64px;
+
+  --hf-radius-sm: 6px;
+  --hf-radius: 10px;
+  --hf-radius-lg: 14px;
+
+  --hf-dur-fast: 120ms;
+  --hf-dur: 200ms;
+  --hf-ease: cubic-bezier(.2, .6, .2, 1);
+
+  --hf-font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --hf-font-num: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+// ----------------------------------------------------------------------------
+// Base
+// ----------------------------------------------------------------------------
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: var(--hf-font-ui);
+  background: var(--hf-bg);
+  color: var(--hf-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20;
+}
+
+// Selection
+::selection {
+  background: var(--hf-primary-soft);
+  color: var(--hf-text);
+}
+
+// ----------------------------------------------------------------------------
+// Utility classes
+// ----------------------------------------------------------------------------
+.spacer { flex: 1 1 auto; }
+.full-width { width: 100%; }
+.flex-row { display: flex; gap: 12px; align-items: center; }
+.flex-col { display: flex; flex-direction: column; gap: 12px; }
+.page-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+// Numeric — tabular figures in JetBrains Mono
+.hf-num {
+  font-family: var(--hf-font-num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
+  letter-spacing: -0.01em;
+}
+
+// Pill / chip
+.hf-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  background: var(--hf-surface-2);
+  color: var(--hf-text-muted);
+  border: 1px solid var(--hf-border);
+
+  &.hf-pill-success {
+    background: var(--hf-success-soft);
+    color: var(--hf-success);
+    border-color: transparent;
+  }
+  &.hf-pill-danger {
+    background: var(--hf-danger-soft);
+    color: var(--hf-danger);
+    border-color: transparent;
+  }
+  &.hf-pill-amber {
+    background: var(--hf-amber-soft);
+    color: var(--hf-amber);
+    border-color: transparent;
+  }
+  &.hf-pill-info {
+    background: var(--hf-info-soft);
+    color: var(--hf-info);
+    border-color: transparent;
+  }
+  &.hf-pill-primary {
+    background: var(--hf-primary-soft);
+    color: var(--hf-primary);
+    border-color: transparent;
+  }
+}
+
+// Section title — small caps + leading rule
+.hf-section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hf-text-muted);
+
+  &::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--hf-border-strong);
+  }
+}
+
+// Card surface
+.hf-card {
+  background: var(--hf-surface);
+  border: 1px solid var(--hf-border);
+  border-radius: var(--hf-radius);
+}
+
+// Status dot
+.hf-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--hf-text-faint);
+  flex-shrink: 0;
+
+  &.hf-dot-success { background: var(--hf-success); }
+  &.hf-dot-amber   { background: var(--hf-amber); }
+  &.hf-dot-danger  { background: var(--hf-danger); }
+  &.hf-dot-info    { background: var(--hf-info); }
+  &.hf-dot-primary { background: var(--hf-primary); }
+}
+
+// Tables — dense engineering style
+.hf-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+  color: var(--hf-text);
+
+  th, td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--hf-border);
+    height: 36px;
+    vertical-align: middle;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--hf-surface-2);
+    color: var(--hf-text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--hf-border-strong);
+  }
+
+  tbody tr {
+    transition: background-color var(--hf-dur) var(--hf-ease);
+  }
+
+  tbody tr:nth-child(even) {
+    background: rgba(148, 163, 184, 0.03);
+  }
+
+  tbody tr:hover {
+    background: var(--hf-surface-2);
+  }
+
+  td.hf-num, th.hf-num {
+    text-align: right;
+    font-family: var(--hf-font-num);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+}
+
+// Skeleton shimmer
+@keyframes hf-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.hf-skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    90deg,
+    var(--hf-surface-2) 0%,
+    var(--hf-surface-3) 50%,
+    var(--hf-surface-2) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--hf-radius-sm);
+  animation: hf-shimmer 1.6s linear infinite;
+  color: transparent;
+}
+
+// Top progress bar wrapper (used by AppShell)
+.hf-top-progress {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 15;
+  pointer-events: none;
+}
+
+// ----------------------------------------------------------------------------
+// Toast restyle (built on top of mat-snack-bar)
+// ----------------------------------------------------------------------------
+.toast-info .mdc-snackbar__surface,
+.toast-success .mdc-snackbar__surface,
+.toast-error .mdc-snackbar__surface {
+  background: var(--hf-surface) !important;
+  color: var(--hf-text) !important;
+  border: 1px solid var(--hf-border) !important;
+  border-radius: var(--hf-radius) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24) !important;
+}
+.toast-info    .mdc-snackbar__surface { border-left: 3px solid var(--hf-info) !important; }
+.toast-success .mdc-snackbar__surface { border-left: 3px solid var(--hf-success) !important; }
+.toast-error   .mdc-snackbar__surface { border-left: 3px solid var(--hf-danger) !important; }
+
+// ----------------------------------------------------------------------------
+// Material micro-tweaks
+// ----------------------------------------------------------------------------
+// Ensure focus rings stay visible
+:focus-visible {
+  outline: 2px solid var(--hf-primary);
+  outline-offset: 2px;
+  border-radius: var(--hf-radius-sm);
+}
+
+// Form fields — tighter outline color in dark mode for legibility
+.mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline > * {
+  border-color: var(--hf-border-strong);
+}
+
+// ----------------------------------------------------------------------------
+// Reduced motion
+// ----------------------------------------------------------------------------
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hf-skeleton { animation: none; background: var(--hf-surface-2); }
+}
